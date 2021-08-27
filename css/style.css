@@ -1,0 +1,25 @@
+body {
+   overflow: hidden;
+}
+
+#base-bg {
+    position: absolute;
+    background: rgb(32,32,32);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+ }
+
+ #game {
+    position: absolute;
+    background: rgb(128, 128, 128);
+    border: 8px solid rgb(128, 128, 128);
+    width: 1024px;
+    height: 576px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 1;
+ }
