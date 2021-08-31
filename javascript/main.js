@@ -1,2 +1,3 @@
-import k from "./game/kaboom_setting.js"
+import Level from "./game/scenes/level.js"
 
+Level();

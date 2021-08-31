@@ -1,6 +1,6 @@
-import kaboom from "../libraries/kaboom/kaboom.mjs";
+import kaboom from "./kaboom.mjs"
 
-export const k = kaboom({
+kaboom({
         global: true,
         width: 1024,
         height: 576,
@@ -9,4 +9,4 @@ export const k = kaboom({
         debug: true
     });
 
-export default k;
+loadRoot('./assets/');
