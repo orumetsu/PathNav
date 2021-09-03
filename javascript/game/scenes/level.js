@@ -1,13 +1,17 @@
-export default function Level() {
+import RocketSprite from "../components/player.js";
+
+export default function level() {
     
     loadSprite('air','level/air.png');
     loadSprite('floor','level/floor.png');
     loadSprite('green_target','level/green_target.png');
     loadSprite('red_target','level/red_target.png');
-
     loadSprite('bg','bg/start_640.png');
 
     scene('level', () => {
+
+        RocketSprite();
+
         // const map = addLevel([
         //     "======",
         //     "======",
@@ -32,19 +36,23 @@ export default function Level() {
             //     solid(),
             //     "block"]
         // });
-        camScale(1); // minimal zoom 2 max zoom 6 default 4 
-        const bg = add([
-            sprite('bg',{
-            width: width(),
-            height: height(),
-            tiled: true,
-            }),
-            area(vec2(0,0),vec2(width(),height())),
-        ]);
-        bg.action(() => {
-            camPos(mousePos());
-        });
-        console.log(mousePos())
+        
+        // camScale(1); // minimal zoom 2 max zoom 6 default 4 
+        // const bg = add([
+        //     sprite('bg',{
+        //     width: width(),
+        //     height: height(),
+        //     tiled: true,
+        //     }),
+        //     area(vec2(0,0),vec2(width(),height())),
+        // ]);
+        // bg.action(() => {
+        //     camPos(mousePos());
+        // });
+        
+
+        
+        // console.log(mousePos())
     });
 
     go('level');
