@@ -1,7 +1,7 @@
 import {levelBG} from '../objects/movingBG.js'
 import {camOperations} from '../objects/camOperations.js'
 import {mapList, mapConfig} from '../objects/map.js';
-// import RocketSprite from '../objects/player.js'
+import {RocketSprite} from "../objects/rocket.js";
 
 export function startLevel() {
     
@@ -14,7 +14,8 @@ export function startLevel() {
         console.log(map.width());
         console.log(map.height());
         console.log(map.getPos());
-
+        RocketSprite();
+        
     });
 
     // Initiate First Level

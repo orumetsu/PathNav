@@ -21,3 +21,8 @@ loadSprite('air', 'level/air.png');
 loadSprite('floor', 'level/floor.png');
 loadSprite('green_target', 'level/green_target.png');
 loadSprite('red_target', 'level/red_target.png');
+
+// Load Rocket
+for(let i=0; i<=3; i++){
+    loadSprite('rocket'+String(i), 'player/player'+String(i)+'.png')
+};
