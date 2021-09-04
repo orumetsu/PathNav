@@ -1,8 +1,12 @@
 export default function RocketSprite() {
-    
+
    let pathMove = []; 
+   let moving;
 
    const rocket = add([pos(vec2(32)),sprite('rocket0'),rotate(deg2rad(0)),pos(vec2(32)),origin("center"),scale(2)]);
+    addButton('left',vec2(45,531),()=>{rocketRotate(true)});
+    addButton('right',vec2(105,531),()=>{rocketRotate(false)});
+    addButton('up',vec2(75,471),()=>{rocketMove()});
 
    async function maxThorttle(x,y){
         await wait(0.05);
@@ -13,7 +17,7 @@ export default function RocketSprite() {
         await wait(0.01);
         rocket.changeSprite('rocket3');
         await moveTo(x*0.75, y*0.75,5);
-        console.log(rocket.pos);
+        // console.log(rocket.pos);
     }
 
     async function moveTo(x,y,framePerSec){
@@ -23,7 +27,6 @@ export default function RocketSprite() {
                 await wait(0.01);
                 let posY = rocket.pos.y + frame;
                 rocket.pos.y = posY;
-                console.log(rocket.pos.y);
             }
 
         }else if(y == 0){
@@ -32,12 +35,9 @@ export default function RocketSprite() {
                 await wait(0.01);
                 let posX = rocket.pos.x + frame;
                 rocket.pos.x = posX;
-                console.log(rocket.pos.x);
             }
             
         }
-
-        console.log(x+'n'+y);
     }
 
     async function idleThorttle(){
@@ -47,9 +47,11 @@ export default function RocketSprite() {
         rocket.changeSprite('rocket1');
         await wait(0.05);
         rocket.changeSprite('rocket0');
+        moving = false;
     }
 
     function rocketRotate(addDeg){
+       if(!moving){
         if(rad2deg(rocket.angle) == 360 || rad2deg(rocket.angle) == -360){
             rocket.angle = 0;
         }
@@ -58,11 +60,13 @@ export default function RocketSprite() {
         }else{
             rocket.angle -= deg2rad(90);
         }
+       }
     }
 
    async function rocketMove(){
+        moving = true;
         let x,y;
-        const distance = 100;
+        const distance = 20;
         if(rad2deg(rocket.angle) == 360 || rad2deg(rocket.angle) == -360 || rad2deg(rocket.angle) == 0){
             y = -distance;
             x = 0;
@@ -78,13 +82,14 @@ export default function RocketSprite() {
         }
         await maxThorttle(x,y);
         await idleThorttle();
+       
     }
 
     keyPress("enter",async ()=>{
         let i = 0;
         for(i in pathMove){
-           console.log(pathMove[i])
-           await wait(0.3)
+        //    console.log(pathMove[i]);
+           await wait(0.5);
            if(pathMove[i] == 'left'){
                rocketRotate(true);
            }else if(pathMove[i] == 'right'){
@@ -96,16 +101,38 @@ export default function RocketSprite() {
         pathMove = [];
     });
 
+    function addButton(title,position,func){
+        const button = add([pos(position),rect(50,50),origin("center"),color(0,0,0)]);
+        const titleText = add([
+            text(title, 9),
+            pos(position),
+            origin("center"),
+            color(1, 1, 1),
+        ]);
+
+        button.action(() => {
+            if (button.isHovered()) {
+                button.color = rgb(1, 1, 1);
+                titleText.color = rgb(0,0,0);
+                if (mouseIsClicked()) {
+                   func();
+                }
+            } else {
+                titleText.color = rgb(1,1,1);
+                button.color = rgb(0, 0, 0);
+            }
+        })
+    }
+
     keyPress("right",()=>{
-        pathMove.push('right');
+        rocketRotate(false);
     });
 
     keyPress("left",()=>{
-        pathMove.push('left');
+        rocketRotate(true);
     });
 
     keyPress("up",()=>{
-        pathMove.push('move');
+       rocketMove();
     });
-
 };
