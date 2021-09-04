@@ -1,53 +1,23 @@
-export default function Level() {
+import {levelBG} from '../objects/movingBG.js'
+import {camOperations} from '../objects/camOperations.js'
+import {mapList, mapConfig} from '../objects/map.js';
+// import RocketSprite from '../objects/player.js'
+
+export function startLevel() {
     
-    loadSprite('air','level/air.png');
-    loadSprite('floor','level/floor.png');
-    loadSprite('green_target','level/green_target.png');
-    loadSprite('red_target','level/red_target.png');
+    scene('level', ({level,totalMove}) => {   
+        
+        layers(['bg', 'arena', 'player', 'ui'], 'player');
+        levelBG();
+        camOperations();
+        const map = addLevel(mapList[level-1],mapConfig);
+        console.log(map.width());
+        console.log(map.height());
+        console.log(map.getPos());
 
-    loadSprite('bg','bg/start_640.png');
-
-    scene('level', () => {
-        // const map = addLevel([
-        //     "======",
-        //     "======",
-        //     "======",
-        //     "======",
-        //     "======",
-        // ], {
-        //     width: 64,
-        //     height: 64,
-        //     pos: vec2(0, 0),
-            // every "=" on the map above will be turned to a game object with following comps
-            // "=": [
-            //     sprite('bg'),
-            //     solid(),
-            //     "block"],
-            // "*": [
-            //     sprite("green_target"),
-            //     solid(),
-            //     "block"],
-            // "&": [
-            //     sprite("red_target"),
-            //     solid(),
-            //     "block"]
-        // });
-        camScale(1); // minimal zoom 2 max zoom 6 default 4 
-        const bg = add([
-            sprite('bg',{
-            width: width(),
-            height: height(),
-            tiled: true,
-            }),
-            area(vec2(0,0),vec2(width(),height())),
-        ]);
-        bg.action(() => {
-            camPos(mousePos());
-        });
-        console.log(mousePos())
     });
 
-    go('level');
-
+    // Initiate First Level
+    go('level',{level: 1, totalMove: 0});
 
 }
