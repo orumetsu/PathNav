@@ -17,7 +17,6 @@ export default function RocketSprite() {
         await wait(0.01);
         rocket.changeSprite('rocket3');
         await moveTo(x*0.75, y*0.75,5);
-        // console.log(rocket.pos);
     }
 
     async function moveTo(x,y,framePerSec){
