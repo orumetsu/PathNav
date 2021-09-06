@@ -1,3 +1,9 @@
-import Level from "./game/scenes/level.js"
+import {startLevel} from './game/scenes/level.js'
+import {startSoal} from './game/scenes/soal.js'
 
-Level();
+
+
+// startLevel();
+startSoal(1);
+
+go('soal');
