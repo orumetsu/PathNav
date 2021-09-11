@@ -17,7 +17,7 @@ for(let i=1; i<=2; i++){
 };
 
 // Load Blocks
-// loadSprite('air', 'level/air.png');
+loadSprite('air', 'level/air.png');
 loadSprite('floor', 'level/floor.png');
 loadSprite('green_target', 'level/green_target.png');
 loadSprite('red_target', 'level/red_target.png');

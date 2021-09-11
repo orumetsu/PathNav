@@ -11,6 +11,7 @@ export function startLevel(curLevel, tMove) {
     scene('level', ({level,totalMove}) => {   
 
        let initialPosition = vec2(10,10);
+       let mapLevel = mapList[level-1];
 
         add([
             pos(0, 0.8*height()),
@@ -27,11 +28,11 @@ export function startLevel(curLevel, tMove) {
         debugComms();
         layers(['bg', 'arena', 'player', 'ui'], 'arena');
         levelBG();
-        const map = addLevel(mapList[level-1],mapConfig);
+        const map = addLevel(mapLevel,mapConfig);
         blackHole();
         star();
         moon();
-        rocket(initialPosition);
+        rocket(initialPosition,mapLevel);
     });
     // Initiate Level
     go('level',{level: curLevel, totalMove: tMove});
