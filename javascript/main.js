@@ -1,3 +1,3 @@
-import {startLevel} from './game/scenes/level.js'
+import {startMenu} from './game/scenes/startMenu.js'
 
-startLevel();
+startMenu();

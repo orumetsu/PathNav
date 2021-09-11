@@ -17,12 +17,20 @@ for(let i=1; i<=2; i++){
 };
 
 // Load Blocks
-loadSprite('air', 'level/air.png');
+// loadSprite('air', 'level/air.png');
 loadSprite('floor', 'level/floor.png');
 loadSprite('green_target', 'level/green_target.png');
 loadSprite('red_target', 'level/red_target.png');
 
+// Load Multipliers
+loadSprite('blackhole', 'level/blackhole.png');
+loadSprite('moon', 'level/moon.png');
+loadSprite('star', 'level/star.png');
+
 // Load Rocket
 for(let i=0; i<=3; i++){
-    loadSprite('rocket'+String(i), 'player/player'+String(i)+'.png')
+    loadSprite('rocket'+String(i), 'player/rocket'+String(i)+'.png')
 };
+
+// Load Buttons
+loadSprite('startButton','buttons/start_button.png')

@@ -1,22 +1,15 @@
-export function camOperations() {
-
-    // Default camScale
-    let currentScale = 4;
-    camScale(4);
-    camPos(width()/2,height()/2)
-    //camPos(player.pos);//
+export function camTransform(rocket) {
     
-    // Change Camera Position
-    action(()=>{
-        if(mouseIsClicked()){
-            camPos(mousePos());
-        };
-    });
+    // // Default Camera
+    let currentScale = 4;
+    camIgnore(['bg', 'ui']);
+    camScale(currentScale);
+    camPos(rocket.pos);
 
     // Zoom In
     keyPress('i', () => {
         if(currentScale != 16){
-            currentScale *= 2;
+            currentScale *=2;
             camScale(currentScale);
         };
     });
@@ -33,9 +26,14 @@ export function camOperations() {
     keyPress('p', () => {
         currentScale = 4;
         camScale(currentScale);
-        //camPos(player.pos);//
+        camPos(rocket.pos);
     });
-    
-    camIgnore(['bg','ui']);
 
-}
+    // Change Camera Position
+    action(()=>{
+        if(mouseIsClicked()){
+            camPos(mousePos());
+        };
+    });
+
+};

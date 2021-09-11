@@ -20,7 +20,7 @@ export function levelBG() {
         };
     };
 
-    action('bg', (bg) => {
+    render('bg', (bg) => {
         bg.move(-4, 0);
         if (bg.pos.x < -tileSize){
             for(let i = 0; i<=1; i++){
@@ -58,7 +58,7 @@ export function menuBG(BGtype) {
         ]);
     };
 
-    action('bg', (bg) => {
+    render('bg', (bg) => {
         bg.move(-4, 0);
         if (bg.pos.x < -height()){
             const newBG = add([
