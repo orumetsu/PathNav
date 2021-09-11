@@ -1,5 +1,12 @@
 export function camTransform(rocket) {
     
+    const panArea = add([
+        rect(width(),0.79*height()),
+        pos(0,0),
+        layer('ui'),
+        color(0,0,0,0),
+    ])
+
     // // Default Camera
     let currentScale = 4;
     camIgnore(['bg', 'ui']);
@@ -30,8 +37,8 @@ export function camTransform(rocket) {
     });
 
     // Change Camera Position
-    action(()=>{
-        if(mouseIsClicked()){
+    panArea.action(()=>{
+        if(mouseIsClicked() && panArea.isHovered()){
             camPos(mousePos());
         };
     });

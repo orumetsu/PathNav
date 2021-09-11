@@ -25,7 +25,7 @@ export function startMenu() {
         const startButton = add([
           sprite('startButton'),
           origin('center'),
-          scale(2),
+          scale(vec2(0.003*height())),
           pos(0.5*width(), 0.7*height()),
           color(0.7, 0.7, 0.7),
         ]);
@@ -33,17 +33,20 @@ export function startMenu() {
             text('START', 0.06*height()),
             origin('center'),
             pos(0.5*width(), 0.7*height()),
+            color(0.7, 0.7, 0.7),
         ])
 
         startButton.action(() => {
             if (startButton.isHovered()) {
                 startButton.color = rgb(1, 1, 1);
+                startText.color = rgb(1, 1, 1);
                 if(startButton.isClicked()) {
                     startLevel(1, 0);
                 }
             }
             else {
                 startButton.color = rgb(0.7, 0.7, 0.7);
+                startText.color = rgb(0.7, 0.7, 0.7);
             }
         });
         

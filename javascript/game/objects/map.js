@@ -16,5 +16,5 @@ export const mapConfig = {
     pos: vec2(0,0),
     ' ': [sprite('air')],
     '=': [sprite('floor')],
-    '*': [sprite('red_target')], // Interchange with green_target
+    '*': [sprite('red_target')], // Interchange with green_targe
 };

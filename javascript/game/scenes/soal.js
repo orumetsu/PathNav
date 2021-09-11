@@ -2,6 +2,7 @@ import { formAnswer } from "../objects/formAnswer.js";
 import { question } from "../objects/question.js";
 
 export function startSoal() {
+
     scene('soal', (level) => {   
         layers(['bg', 'arena', 'player', 'ui'], 'player');
         let widthQuestion = width();
@@ -9,4 +10,5 @@ export function startSoal() {
         question(level,widthQuestion,heightQuestion);
         formAnswer(level,widthQuestion,heightQuestion);
     });
+    
 }

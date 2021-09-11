@@ -1,9 +1,8 @@
-import {camTransform} from "./camTransform.js";
+import {camTransform} from "./camTransform.js"
 
-export function rocket(initialPosition,map) {
+export function makeRocket(initialPosition,map) {
 
-
-
+    
     const rocket = add([
         sprite('rocket0'),
         pos(initialPosition),
@@ -12,24 +11,46 @@ export function rocket(initialPosition,map) {
         layer('player'),
         area(),
         color(1,1,1),
+        'rocket',
     ]);
     let waitTime = 1e-2;
     let movement = false;
+
     let initPos = initialPosition;
     let upperVerticalLimit = 0
     let LowerVerticalLimit = upperVerticalLimit + (map.length * 20);
     let LeftHorizontalLimit = 0;
     let RightHorizontalLimit = LeftHorizontalLimit + (map[0].split('').length * 20);
+
+    let multiplier = 1;
+
     camTransform(rocket, movement);
+
+    // Kaboom Functions
+
+    rocket.collides('blackhole', (blackhole) => {
+        destroy(blackhole);
+        multiplier *= 0.5;
+        console.log(multiplier)
+    })
+    rocket.collides('moon', (moon) => {
+        destroy(moon);
+        multiplier *= 1.5;
+        console.log(multiplier)
+    })
+    rocket.collides('star', (star) => {
+        multiplier *= 2;
+        destroy(star);
+        console.log(multiplier)
+    })
     
     addButton('Left',vec2(0.075*width(),0.9*height()),()=>{rocketRotateCCW(true)});
     addButton('Move',vec2(0.2*width(),0.9*height()),()=>{rocketMove()});
     addButton('Right',vec2(0.325*width(),0.9*height()),()=>{rocketRotateCCW(false)});
-    addButton('+',vec2(0.45*width(),0.9*height()),()=>{
 
-        
 
-    });
+    addButton('+',vec2(0.45*width(),0.9*height()),()=>{});
+
 
     keyPress(['right','d'],()=>{
         rocketRotateCCW(false);
@@ -43,7 +64,20 @@ export function rocket(initialPosition,map) {
     rocketMove();
     });
 
-    // Functions
+    const multiplierText = add([
+        text('x' + multiplier, 0.04*height()),
+        pos(0.85*width(), 0.9*height()),
+        layer('ui'),
+        origin('left')
+    ]);
+
+   
+    // increment score every frame
+    action(() => {
+        multiplierText.text = 'x' + multiplier;
+    });
+
+    // Custom Functions
 
     async function moveTo(x,y,framePerSec){
         if(x == 0){
@@ -82,15 +116,15 @@ export function rocket(initialPosition,map) {
         rocket.changeSprite('rocket1');
         await wait(0.15);
         rocket.changeSprite('rocket0');
-        console.log(time());
         movement = false;
         await areaLimit();
+
     }
    
     async function rocketRotateCCW(addDeg){
         if(!movement){
             movement = true;
-            action(() => {
+            rocket.action(() => {
                 if(movement){
                     camPos(rocket.pos);
                 }
@@ -114,7 +148,7 @@ export function rocket(initialPosition,map) {
     async function rocketMove(){
         if(!movement){
             movement = true;
-            action(() => {
+            rocket.action(() => {
                 if(movement){
                     camPos(rocket.pos);
                 }
@@ -142,7 +176,7 @@ export function rocket(initialPosition,map) {
     function addButton(title,position,func){
         const button = add([pos(position),rect(0.15*height(),0.15*height()),origin('center'),color(0,0,0),layer('ui')]);
         const titleText = add([
-            text(title, 0.03*height()),
+            text(title, 0.025*height()),
             pos(position),
             origin('center'),
             color(1, 1, 1),
@@ -170,22 +204,30 @@ export function rocket(initialPosition,map) {
             rocket.pos.x < LeftHorizontalLimit ||
             rocket.pos.x > RightHorizontalLimit
             ){
-                
-                rocket.hidden = true;
-                rocket.pos = vec2(10,10);
-                movement = true;
-                await wait(0.25);
-                rocket.hidden = false;
-                await wait(0.25);
-                rocket.hidden = true;
-                await wait(0.25);
-                rocket.hidden = false;
-                await wait(0.25);
-                rocket.hidden = true;
-                await wait(0.25);
-                rocket.hidden = false;
-                movement = false;
+            await rocketDie();
         }   
         
     }
+
+    async function rocketDie(){
+        rocket.hidden = true;
+        rocket.pos = vec2(10,10);
+        movement = true;
+        await wait(0.25);
+        rocket.hidden = false;
+        await wait(0.25);
+        rocket.hidden = true;
+        await wait(0.25);
+        rocket.hidden = false;
+        await wait(0.25);
+        rocket.hidden = true;
+        await wait(0.25);
+        rocket.hidden = false;
+        movement = false;
+    }
+
+    collides('rocket', 'air', () => {
+        
+    });
+
 };
