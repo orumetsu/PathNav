@@ -1,8 +1,8 @@
 loadRoot('assets/');
 
 // Load Background
-loadSprite('bgStart', 'bg/bgStart.png');
-loadSprite('bgEnd', 'bg/bgEnd.png');
+loadSprite('bgStart', 'bg/bgstart.png');
+loadSprite('bgEnd', 'bg/bgend.png');
 for(let i=1; i<=2; i++){
     loadSprite('bg'+String(i), 'bg/lv/bg'+String(i)+'.png',{
         sliceX: 4,
@@ -29,8 +29,8 @@ loadSprite('star', 'level/star.png');
 
 // Load Rocket
 for(let i=0; i<=3; i++){
-    loadSprite('rocket'+String(i), 'player/rocket'+String(i)+'.png')
+    loadSprite('rocket'+String(i), 'player/rocket'+String(i)+'.png');
 };
 
 // Load Buttons
-loadSprite('startButton','buttons/start_button.png')
+loadSprite('startButton','buttons/start_button.png');
