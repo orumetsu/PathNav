@@ -1,30 +1,44 @@
-import {camTransform} from "./camTransform.js";
+import {camTransform} from "./camTransform.js"
 
-export function makeRocket() {
-
+export function rocket(initialPosition) {
+    
     const rocket = add([
         sprite('rocket0'),
-        pos(vec2(10,10)),
+        pos(initialPosition),
         rotate(deg2rad(0)),
         origin('center'),
         layer('player'),
+        area(),
         color(1,1,1),
         'rocket',
     ]);
     let waitTime = 1e-2;
     let movement = false;
+    let multiplier = 1;
     camTransform(rocket, movement);
 
-    rocket.action(() => {
-        if (rocket.isColliding(bomb)) {
-            score += 1;
-        }
-    });
+    // Kaboom Functions
+
+    rocket.collides('blackhole', (blackhole) => {
+        destroy(blackhole);
+        multiplier *= 0.5;
+        console.log(multiplier)
+    })
+    rocket.collides('moon', (moon) => {
+        destroy(moon);
+        multiplier *= 1.5;
+        console.log(multiplier)
+    })
+    rocket.collides('star', (star) => {
+        multiplier *= 2;
+        destroy(star);
+        console.log(multiplier)
+    })
     
     addButton('Left',vec2(0.075*width(),0.9*height()),()=>{rocketRotateCCW(true)});
     addButton('Move',vec2(0.2*width(),0.9*height()),()=>{rocketMove()});
     addButton('Right',vec2(0.325*width(),0.9*height()),()=>{rocketRotateCCW(false)});
-    addButton('+',vec2(0.45*width(),0.9*height()),()=>{});
+    // addButton('+',vec2(0.45*width(),0.9*height()),()=>{});
 
     keyPress(['right','d'],()=>{
         rocketRotateCCW(false);
@@ -38,7 +52,19 @@ export function makeRocket() {
     rocketMove();
     });
 
-    // Functions
+    const multiplierText = add([
+        text('x' + multiplier, 0.04*height()),
+        pos(0.85*width(), 0.9*height()),
+        layer('ui'),
+        origin('left')
+    ]);
+
+    // increment score every frame
+    action(() => {
+        multiplierText.text = 'x' + multiplier;
+    });
+
+    // Custom Functions
 
     async function moveTo(x,y,framePerSec){
         if(x == 0){
@@ -75,9 +101,7 @@ export function makeRocket() {
         rocket.changeSprite('rocket1');
         await wait(0.15);
         rocket.changeSprite('rocket0');
-        console.log(time());
         movement = false;
-        
     }
    
     async function rocketRotateCCW(addDeg){
@@ -135,7 +159,7 @@ export function makeRocket() {
     function addButton(title,position,func){
         const button = add([pos(position),rect(0.15*height(),0.15*height()),origin('center'),color(0,0,0),layer('ui')]);
         const titleText = add([
-            text(title, 0.03*height()),
+            text(title, 0.025*height()),
             pos(position),
             origin('center'),
             color(1, 1, 1),
