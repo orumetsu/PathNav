@@ -1,13 +1,14 @@
 import {camTransform} from "./camTransform.js";
 
-export function makeRocket() {
+export function rocket(initialPosition) {
 
     const rocket = add([
         sprite('rocket0'),
-        pos(vec2(10,10)),
+        pos(initialPosition),
         rotate(deg2rad(0)),
         origin('center'),
         layer('player'),
+        area(),
         color(1,1,1),
     ]);
     let waitTime = 1e-2;
