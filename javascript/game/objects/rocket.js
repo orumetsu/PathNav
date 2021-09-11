@@ -9,10 +9,17 @@ export function makeRocket() {
         origin('center'),
         layer('player'),
         color(1,1,1),
+        'rocket',
     ]);
     let waitTime = 1e-2;
     let movement = false;
     camTransform(rocket, movement);
+
+    rocket.action(() => {
+        if (rocket.isColliding(bomb)) {
+            score += 1;
+        }
+    });
     
     addButton('Left',vec2(0.075*width(),0.9*height()),()=>{rocketRotateCCW(true)});
     addButton('Move',vec2(0.2*width(),0.9*height()),()=>{rocketMove()});
@@ -76,7 +83,7 @@ export function makeRocket() {
     async function rocketRotateCCW(addDeg){
         if(!movement){
             movement = true;
-            action(() => {
+            rocket.action(() => {
                 if(movement){
                     camPos(rocket.pos);
                 }
@@ -100,7 +107,7 @@ export function makeRocket() {
     async function rocketMove(){
         if(!movement){
             movement = true;
-            action(() => {
+            rocket.action(() => {
                 if(movement){
                     camPos(rocket.pos);
                 }

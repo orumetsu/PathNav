@@ -24,8 +24,8 @@ export function startLevel(curLevel, tMove) {
         debugComms();
         layers(['bg', 'arena', 'player', 'ui'], 'arena');
         levelBG();
+        addLevel(mapList[level-1],mapConfig);
         makeRocket();
-        const map = addLevel(mapList[level-1],mapConfig);
         
         // Test Area //
         
