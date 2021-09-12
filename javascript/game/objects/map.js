@@ -1,6 +1,4 @@
 export const mapList = [
-
-// Level 1
 [
 '=====',
 '= *==',
